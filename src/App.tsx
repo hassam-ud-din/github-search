@@ -1,12 +1,12 @@
 import React from "react"
 import { Space, Select } from "antd"
 import "./App.css"
-import SearchFieldContainer from "./containers/SearchFieldContainer"
+import SearchContainer from "./containers/SearchContainer"
 
 function App() {
   return (
     <Space wrap>
-      <SearchFieldContainer />
+      <SearchContainer />
     </Space>
   )
 }

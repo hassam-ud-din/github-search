@@ -10,7 +10,7 @@ const searchGithub = async (option: string, searchTerm: string) => {
 
   const response = await octokit.request(`GET /search/${option}`, {
     q: searchTerm,
-    per_page: 2,
+    per_page: 8,
   })
 
   return response.data

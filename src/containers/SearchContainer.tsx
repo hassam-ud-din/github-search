@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from "react"
-import SearchField from "../components/SearchField"
+import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
 import searchGithub from "../utils/searchGithub"
+import CategoryFilter from "../components/Search/CategoryFilter"
 
 type Props = {}
 
-function SearchFieldContainer({}: Props) {
+function SearchContainer({}: Props) {
   const [searchTerm, setSearchTerm] = useState<string>("")
-  const debounceDelay: number = 2000 // in milliseconds
+  const debounceDelay: number = 1000 // in milliseconds
+
+  // replace 'any' with a concrete type
   const [results, setResults] = useState<Array<any>>([])
-  const [searchOption, setSearchOption] = useState("users")
+
+  // coupling here (find a better approach)
+  const [searchCategory, setSearchCategory] = useState<string>("users")
 
   // callback function for useDebounce hook
   const handleSearch = async () => {
     if (searchTerm.length >= 3) {
-      const data = await searchGithub(searchOption, searchTerm)
+      const data = await searchGithub(searchCategory, searchTerm)
       console.log(`returned data for ${searchTerm}:`, data)
       setResults(data.items)
     }
   }
 
+  useEffect(() => {
+    handleSearch()
+  }, [searchCategory])
+
+  // replace 'any' with a concrete type
   const debouncedSearch: any = useDebounce(handleSearch, debounceDelay)
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
     debouncedSearch()
+  }
+
+  // search categories
+  const handleCategoryChange = (newCategory: string) => {
+    setSearchCategory(newCategory)
   }
 
   return (
@@ -33,12 +48,13 @@ function SearchFieldContainer({}: Props) {
         searchTerm={searchTerm}
         handleSearchChange={handleSearchChange}
       />
+      <CategoryFilter handleCategoryChange={handleCategoryChange} />
       <div>
-        {results &&
-          results.map((result) => <div key={result.id}>{result.login}</div>)}
+        {searchTerm.length >= 3 &&
+          results?.map((result) => <div key={result.id}>{result.url}</div>)}
       </div>
     </React.Fragment>
   )
 }
 
-export default SearchFieldContainer
+export default SearchContainer
