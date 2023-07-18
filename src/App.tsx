@@ -1,8 +1,14 @@
 import React from "react"
+import { Space, Select } from "antd"
 import "./App.css"
+import SearchFieldContainer from "./containers/SearchFieldContainer"
 
 function App() {
-  return <div className="App">My app</div>
+  return (
+    <Space wrap>
+      <SearchFieldContainer />
+    </Space>
+  )
 }
 
 export default App
