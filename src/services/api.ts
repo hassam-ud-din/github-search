@@ -6,7 +6,7 @@ export const octokit = new Octokit({
   auth: process.env.GITHUB_ACCESS_TOKEN,
 })
 
-type OptionParams = {
+export type OptionParams = {
   q: string
   sort?: "followers" | "repositories" | "joined"
   order?: "desc" | "asc"

@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from "react"
 import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
-import { octokit, searchGithub } from "../utils/searchGithub"
 import CategoryFilter from "../components/Search/CategoryFilter"
 import { Space } from "antd"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { searchAsync, setSearchCategory } from "../features/search/searchSlice"
 
 type Props = {}
 
 function SearchContainer({}: Props) {
-  const [searchTerm, setSearchTerm] = useState<string>("")
-  const debounceDelay: number = 1000 // in milliseconds
-
-  // replace 'any' with a concrete type
-  const [results, setResults] = useState<Array<any>>([])
+  const dispatch = useAppDispatch()
 
   const categories = [
     { value: "users", label: "User" },
     { value: "repositories", label: "Repos" },
   ]
+
+  // ******
+  // MAKE THE CATEGORY PERSIST
+  // UPDATE DATA AND CATEGORY STATES
+  // SYNC REDUX STATES WITH LOCAL STATES
+  // ******
+
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    categories[0].value
+    useAppSelector((state) => state.search.category)
   )
+
+  // replace 'any' with a concrete type
+  const [results, setResults] = useState<Array<any>>(
+    useAppSelector((state) => state.search.data)
+  )
+
+  const [searchTerm, setSearchTerm] = useState<string>("")
+
+  const debounceDelay: number = 1000 // in milliseconds
 
   // callback function for useDebounce hook
   const search = async () => {
@@ -29,13 +42,13 @@ function SearchContainer({}: Props) {
         q: searchTerm,
         per_page: 8,
       }
-      const data = await searchGithub(octokit, selectedCategory, options)
-      console.log(`returned data for ${searchTerm}:`, data)
-      setResults(data.items)
+      console.log("search called")
+      dispatch(searchAsync(selectedCategory, options))
     }
   }
 
   useEffect(() => {
+    dispatch(setSearchCategory(selectedCategory))
     search()
   }, [selectedCategory])
 
@@ -61,8 +74,9 @@ function SearchContainer({}: Props) {
         handleCategoryChange={handleCategoryChange}
       />
       <div>
-        {searchTerm.length >= 3 &&
-          results?.map((result) => <div key={result.id}>{result.url}</div>)}
+        {results?.map((result) => (
+          <div key={result.id}>{result.url}</div>
+        ))}
       </div>
     </Space>
   )
