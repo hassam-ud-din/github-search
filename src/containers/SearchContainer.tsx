@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
-import searchGithub from "../utils/searchGithub"
+import { octokit, searchGithub } from "../utils/searchGithub"
 import CategoryFilter from "../components/Search/CategoryFilter"
 
 type Props = {}
@@ -13,47 +13,57 @@ function SearchContainer({}: Props) {
   // replace 'any' with a concrete type
   const [results, setResults] = useState<Array<any>>([])
 
-  // coupling here (find a better approach)
-  const [searchCategory, setSearchCategory] = useState<string>("users")
+  const categories = [
+    { value: "users", label: "User" },
+    { value: "repositories", label: "Repos" },
+  ]
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categories[0].value
+  )
 
   // callback function for useDebounce hook
-  const handleSearch = async () => {
+  const search = async () => {
     if (searchTerm.length >= 3) {
-      const data = await searchGithub(searchCategory, searchTerm)
+      const options = {
+        q: searchTerm,
+        per_page: 8,
+      }
+      const data = await searchGithub(octokit, selectedCategory, options)
       console.log(`returned data for ${searchTerm}:`, data)
       setResults(data.items)
     }
   }
 
   useEffect(() => {
-    handleSearch()
-  }, [searchCategory])
+    search()
+  }, [selectedCategory])
 
-  // replace 'any' with a concrete type
-  const debouncedSearch: any = useDebounce(handleSearch, debounceDelay)
+  const debouncedSearch = useDebounce(search, debounceDelay)
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
     debouncedSearch()
   }
 
-  // search categories
   const handleCategoryChange = (newCategory: string) => {
-    setSearchCategory(newCategory)
+    setSelectedCategory(newCategory)
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <SearchField
         searchTerm={searchTerm}
         handleSearchChange={handleSearchChange}
       />
-      <CategoryFilter handleCategoryChange={handleCategoryChange} />
+      <CategoryFilter
+        categories={categories}
+        handleCategoryChange={handleCategoryChange}
+      />
       <div>
         {searchTerm.length >= 3 &&
           results?.map((result) => <div key={result.id}>{result.url}</div>)}
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 

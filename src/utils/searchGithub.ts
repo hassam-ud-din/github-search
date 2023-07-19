@@ -1,19 +1,24 @@
 import { Octokit } from "octokit"
+// Octokit.js
+// https://github.com/octokit/core.js#readme
 
-const searchGithub = async (option: string, searchTerm: string) => {
-  // Octokit.js
-  // https://github.com/octokit/core.js#readme
+export const octokit = new Octokit({
+  auth: process.env.GITHUB_ACCESS_TOKEN,
+})
 
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_ACCESS_TOKEN,
-  })
-
-  const response = await octokit.request(`GET /search/${option}`, {
-    q: searchTerm,
-    per_page: 8,
-  })
-
-  return response.data
+type OptionParams = {
+  q: string
+  sort?: "followers" | "repositories" | "joined"
+  order?: "desc" | "asc"
+  per_page?: number
+  page?: number
 }
 
-export default searchGithub
+export const searchGithub = async (
+  octokit: Octokit,
+  category: string,
+  options: OptionParams
+) => {
+  const response = await octokit.request(`GET /search/${category}`, options)
+  return response.data
+}
