@@ -7,12 +7,12 @@ type Props = {
 }
 
 function CategoryFilter({ categories, handleCategoryChange }: Props) {
-  const defaultValue: any = "User"
+  const defaultValue: string | null | undefined = categories[0].value
 
   return (
     <Select
       defaultValue={defaultValue}
-      style={{ width: 80 }}
+      style={{ width: 100 }}
       onChange={handleCategoryChange}
       options={categories}
     />

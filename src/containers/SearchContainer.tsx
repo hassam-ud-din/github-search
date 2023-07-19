@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
 import { octokit, searchGithub } from "../utils/searchGithub"
 import CategoryFilter from "../components/Search/CategoryFilter"
+import { Space } from "antd"
 
 type Props = {}
 
@@ -50,7 +51,7 @@ function SearchContainer({}: Props) {
   }
 
   return (
-    <Fragment>
+    <Space wrap>
       <SearchField
         searchTerm={searchTerm}
         handleSearchChange={handleSearchChange}
@@ -63,7 +64,7 @@ function SearchContainer({}: Props) {
         {searchTerm.length >= 3 &&
           results?.map((result) => <div key={result.id}>{result.url}</div>)}
       </div>
-    </Fragment>
+    </Space>
   )
 }
 
