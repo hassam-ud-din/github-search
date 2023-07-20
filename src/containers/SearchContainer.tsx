@@ -1,25 +1,36 @@
-import React, { Fragment, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
-import { octokit, searchGithub } from "../utils/searchGithub"
 import CategoryFilter from "../components/Search/CategoryFilter"
+import { Space } from "antd"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { setQuery, setSearchCategory, setSearchData } from "../features/search/searchSlice"
+import { searchGithub } from "../services/api"
 
-type Props = {}
+type Props = {
+  categories: { value: string; label: string }[]
+  selectedCategory: string
+  results: Array<any>
+  handleCategoryChange: (newCategory: string) => void
+  setResults: any
+}
 
-function SearchContainer({}: Props) {
-  const [searchTerm, setSearchTerm] = useState<string>("")
-  const debounceDelay: number = 1000 // in milliseconds
+function SearchContainer({
+  results,
+  categories,
+  selectedCategory,
+  handleCategoryChange,
+  setResults,
+}: Props) {
+  const dispatch = useAppDispatch()
 
-  // replace 'any' with a concrete type
-  const [results, setResults] = useState<Array<any>>([])
-
-  const categories = [
-    { value: "users", label: "User" },
-    { value: "repositories", label: "Repos" },
-  ]
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    categories[0].value
+  const [searchTerm, setSearchTerm] = useState<string>(
+    useAppSelector((state) => state.search.query)
   )
+
+  const [isComponentMounted, setIsComponentMounted] = useState(false)
+
+  const debounceDelay: number = 1000 // in milliseconds
 
   // callback function for useDebounce hook
   const search = async () => {
@@ -28,14 +39,21 @@ function SearchContainer({}: Props) {
         q: searchTerm,
         per_page: 8,
       }
-      const data = await searchGithub(octokit, selectedCategory, options)
-      console.log(`returned data for ${searchTerm}:`, data)
+      const data = await searchGithub(selectedCategory, options)
+      console.log("data", data)
+
+      dispatch(setQuery(searchTerm))
+      dispatch(setSearchCategory(selectedCategory))
+      dispatch(setSearchData(data.items))
+
       setResults(data.items)
     }
   }
 
   useEffect(() => {
-    search()
+    // preventing the api call if have persisted state
+    setIsComponentMounted(true)
+    if (isComponentMounted) search()
   }, [selectedCategory])
 
   const debouncedSearch = useDebounce(search, debounceDelay)
@@ -45,25 +63,15 @@ function SearchContainer({}: Props) {
     debouncedSearch()
   }
 
-  const handleCategoryChange = (newCategory: string) => {
-    setSelectedCategory(newCategory)
-  }
-
   return (
-    <Fragment>
-      <SearchField
-        searchTerm={searchTerm}
-        handleSearchChange={handleSearchChange}
-      />
+    <Space wrap>
+      <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
       <CategoryFilter
+        selectedCategory={selectedCategory}
         categories={categories}
         handleCategoryChange={handleCategoryChange}
       />
-      <div>
-        {searchTerm.length >= 3 &&
-          results?.map((result) => <div key={result.id}>{result.url}</div>)}
-      </div>
-    </Fragment>
+    </Space>
   )
 }
 
