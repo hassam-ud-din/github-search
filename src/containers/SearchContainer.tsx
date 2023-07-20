@@ -7,24 +7,22 @@ import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { setQuery, setSearchCategory, setSearchData } from "../features/search/searchSlice"
 import { searchGithub } from "../services/api"
 
-type Props = {}
+type Props = {
+  categories: { value: string; label: string }[]
+  selectedCategory: string
+  results: Array<any>
+  handleCategoryChange: (newCategory: string) => void
+  setResults: any
+}
 
-function SearchContainer({}: Props) {
+function SearchContainer({
+  results,
+  categories,
+  selectedCategory,
+  handleCategoryChange,
+  setResults,
+}: Props) {
   const dispatch = useAppDispatch()
-
-  const categories = [
-    { value: "users", label: "User" },
-    { value: "repositories", label: "Repos" },
-  ]
-
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    useAppSelector((state) => state.search.category)
-  )
-
-  // replace 'any' with a concrete type
-  const [results, setResults] = useState<Array<any>>(
-    useAppSelector((state) => state.search.data)
-  )
 
   const [searchTerm, setSearchTerm] = useState<string>(
     useAppSelector((state) => state.search.query)
@@ -55,7 +53,7 @@ function SearchContainer({}: Props) {
   useEffect(() => {
     // preventing the api call if have persisted state
     setIsComponentMounted(true)
-    if (isComponentMounted) debouncedSearch()
+    if (isComponentMounted) search()
   }, [selectedCategory])
 
   const debouncedSearch = useDebounce(search, debounceDelay)
@@ -63,10 +61,6 @@ function SearchContainer({}: Props) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
     debouncedSearch()
-  }
-
-  const handleCategoryChange = (newCategory: string) => {
-    setSelectedCategory(newCategory)
   }
 
   return (
@@ -77,11 +71,6 @@ function SearchContainer({}: Props) {
         categories={categories}
         handleCategoryChange={handleCategoryChange}
       />
-      <div>
-        {results?.map((result) => (
-          <div key={result.id}>{result.url}</div>
-        ))}
-      </div>
     </Space>
   )
 }

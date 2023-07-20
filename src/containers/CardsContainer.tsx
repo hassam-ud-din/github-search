@@ -5,7 +5,7 @@
 //         onClick => .url
 import React from "react"
 import UserCard from "../components/Cards/UserCard"
-import RepoCard from "../components/Cards//RepoCard"
+import RepoCard from "../components/Cards/RepoCard"
 
 type CardComponentMap = {
   [category: string]: React.ComponentType<any>
@@ -18,16 +18,21 @@ const cardComponents: CardComponentMap = {
 
 type Props = {
   category: string
-  cardsData: Array<any>
+  cards: Array<any>
 }
 
-function CardsContainer({ category, cardsData }: Props) {
+function CardsContainer({ category, cards }: Props) {
   const CardComponent = cardComponents[category]
   return (
     <div>
-      {cardsData.map((cardData) => {
-        return <CardComponent key={cardData.id} {...cardData} />
-      })}
+      {/* {cards.map((card) => {
+        return <CardComponent key={card.id} {...card} />
+      })} */}
+      <div>
+        {cards?.map((card) => (
+          <div key={card.id}>{card.url}</div>
+        ))}
+      </div>
     </div>
   )
 }
