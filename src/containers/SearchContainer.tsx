@@ -40,7 +40,7 @@ function SearchContainer({}: Props) {
     if (searchTerm.length >= 3) {
       const options = {
         q: searchTerm,
-        per_page: 8,
+        per_page: 12,
       }
       const data = await searchGithub(selectedCategory, options)
       console.log("data", data)
