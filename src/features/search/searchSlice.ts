@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { octokit, searchGithub, OptionParams } from "../../services/api" // Assuming you have the API file
-import { AppDispatch } from "../../app/store"
-
 interface SearchState {
+  query: string
   category: string
   data: any // Modify the data type as per your response structure
 }
 
 const initialState: SearchState = {
+  query: "",
   category: "",
   data: null,
 }
@@ -16,6 +15,9 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
+    setQuery: (state, action: PayloadAction<string>) => {
+      state.query = action.payload
+    },
     setSearchCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload
     },
@@ -25,17 +27,6 @@ const searchSlice = createSlice({
   },
 })
 
-export const { setSearchCategory, setSearchData } = searchSlice.actions
-
-export const searchAsync =
-  (category: string, options: OptionParams) => async (dispatch: any) => {
-    try {
-      const data = await searchGithub(octokit, category, options)
-      console.log("data", data)
-      dispatch(setSearchData(data.items))
-    } catch (error) {
-      // Handle error, e.g., dispatch an action to show an error message
-    }
-  }
+export const { setQuery, setSearchCategory, setSearchData } = searchSlice.actions
 
 export default searchSlice.reducer

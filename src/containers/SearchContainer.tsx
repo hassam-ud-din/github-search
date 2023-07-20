@@ -4,7 +4,8 @@ import useDebounce from "../hooks/useDebounce"
 import CategoryFilter from "../components/Search/CategoryFilter"
 import { Space } from "antd"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { searchAsync, setSearchCategory } from "../features/search/searchSlice"
+import { setQuery, setSearchCategory, setSearchData } from "../features/search/searchSlice"
+import { searchGithub } from "../services/api"
 
 type Props = {}
 
@@ -31,7 +32,9 @@ function SearchContainer({}: Props) {
     useAppSelector((state) => state.search.data)
   )
 
-  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [searchTerm, setSearchTerm] = useState<string>(
+    useAppSelector((state) => state.search.query)
+  )
 
   const debounceDelay: number = 1000 // in milliseconds
 
@@ -42,14 +45,19 @@ function SearchContainer({}: Props) {
         q: searchTerm,
         per_page: 8,
       }
-      console.log("search called")
-      dispatch(searchAsync(selectedCategory, options))
+      const data = await searchGithub(selectedCategory, options)
+      console.log("data", data)
+
+      dispatch(setQuery(searchTerm))
+      dispatch(setSearchCategory(selectedCategory))
+      dispatch(setSearchData(data.items))
+
+      setResults(data.items)
     }
   }
 
   useEffect(() => {
-    dispatch(setSearchCategory(selectedCategory))
-    search()
+    debouncedSearch()
   }, [selectedCategory])
 
   const debouncedSearch = useDebounce(search, debounceDelay)
@@ -65,14 +73,8 @@ function SearchContainer({}: Props) {
 
   return (
     <Space wrap>
-      <SearchField
-        searchTerm={searchTerm}
-        handleSearchChange={handleSearchChange}
-      />
-      <CategoryFilter
-        categories={categories}
-        handleCategoryChange={handleCategoryChange}
-      />
+      <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+      <CategoryFilter categories={categories} handleCategoryChange={handleCategoryChange} />
       <div>
         {results?.map((result) => (
           <div key={result.id}>{result.url}</div>
