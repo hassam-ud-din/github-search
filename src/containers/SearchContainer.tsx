@@ -17,12 +17,6 @@ function SearchContainer({}: Props) {
     { value: "repositories", label: "Repos" },
   ]
 
-  // ******
-  // MAKE THE CATEGORY PERSIST
-  // UPDATE DATA AND CATEGORY STATES
-  // SYNC REDUX STATES WITH LOCAL STATES
-  // ******
-
   const [selectedCategory, setSelectedCategory] = useState<string>(
     useAppSelector((state) => state.search.category)
   )
@@ -35,6 +29,8 @@ function SearchContainer({}: Props) {
   const [searchTerm, setSearchTerm] = useState<string>(
     useAppSelector((state) => state.search.query)
   )
+
+  const [isComponentMounted, setIsComponentMounted] = useState(false)
 
   const debounceDelay: number = 1000 // in milliseconds
 
@@ -57,7 +53,9 @@ function SearchContainer({}: Props) {
   }
 
   useEffect(() => {
-    debouncedSearch()
+    // preventing the api call if have persisted state
+    setIsComponentMounted(true)
+    if (isComponentMounted) debouncedSearch()
   }, [selectedCategory])
 
   const debouncedSearch = useDebounce(search, debounceDelay)
@@ -74,7 +72,11 @@ function SearchContainer({}: Props) {
   return (
     <Space wrap>
       <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
-      <CategoryFilter categories={categories} handleCategoryChange={handleCategoryChange} />
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        categories={categories}
+        handleCategoryChange={handleCategoryChange}
+      />
       <div>
         {results?.map((result) => (
           <div key={result.id}>{result.url}</div>
