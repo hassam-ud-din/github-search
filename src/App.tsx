@@ -1,8 +1,8 @@
 import "./App.css"
-import Main from "./pages/Main"
+import SearchContainer from "./containers/SearchContainer"
 
 function App() {
-  return <Main />
+  return <SearchContainer />
 }
 
 export default App

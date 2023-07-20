@@ -1,9 +1,17 @@
 import React from "react"
 
-type Props = {}
+type Props = {
+  id: number
+  url: string
+}
 
-function RepoCard({}: Props) {
-  return <div>RepoCard</div>
+function RepoCard({ id, url }: Props) {
+  return (
+    <div>
+      <p>{id}</p>
+      <p>{url}</p>
+    </div>
+  )
 }
 
 export default RepoCard

@@ -1,9 +1,17 @@
 import React from "react"
 
-type Props = {}
+type Props = {
+  id: number
+  url: string
+}
 
-function UserCard({}: Props) {
-  return <div>UserCard</div>
+function UserCard({ id, url }: Props) {
+  return (
+    <div>
+      <p>{id}</p>
+      <p>{url}</p>
+    </div>
+  )
 }
 
 export default UserCard

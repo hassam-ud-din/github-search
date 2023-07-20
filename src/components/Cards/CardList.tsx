@@ -12,22 +12,26 @@ type CardComponentMap = {
 }
 
 const cardComponents: CardComponentMap = {
-  user: UserCard,
-  repository: RepoCard,
+  users: UserCard,
+  repositories: RepoCard,
 }
 
 type Props = {
   category: string
-  cardsData: Array<any>
+  cards: Array<any>
 }
 
-function CardList({ category, cardsData }: Props) {
+function CardList({ category, cards }: Props) {
   const CardComponent = cardComponents[category]
   return (
     <div>
-      {cardsData.map((cardData) => {
-        return <CardComponent key={cardData.id} {...cardData} />
-      })}
+      {cards?.length > 0 ? (
+        cards.map((card) => {
+          return <CardComponent key={card.id} {...card} />
+        })
+      ) : (
+        <p>No data found</p>
+      )}
     </div>
   )
 }
