@@ -71,7 +71,7 @@ function SearchContainer({}: Props) {
   }
 
   return (
-    <Space wrap>
+    <React.Fragment>
       <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
       <CategoryFilter
         selectedCategory={selectedCategory}
@@ -79,7 +79,7 @@ function SearchContainer({}: Props) {
         handleCategoryChange={handleCategoryChange}
       />
       <CardList category={selectedCategory} cards={results} />
-    </Space>
+    </React.Fragment>
   )
 }
 
