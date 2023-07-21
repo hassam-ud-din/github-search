@@ -7,6 +7,7 @@ import React from "react"
 import { Col, Row, Divider } from "antd"
 import UserCard from "./UserCard"
 import RepoCard from "./RepoCard"
+import { RepoType, UserType } from "../../types/api"
 
 type CardComponentMap = {
   [category: string]: React.ComponentType<any>
@@ -19,10 +20,11 @@ const cardComponents: CardComponentMap = {
 
 type Props = {
   category: string
-  cards: Array<any>
+  cards: Array<UserType | RepoType>
+  loading: boolean
 }
 
-function CardList({ category, cards }: Props) {
+function CardList({ category, cards, loading }: Props) {
   const CardComponent = cardComponents[category]
 
   return (
@@ -32,7 +34,7 @@ function CardList({ category, cards }: Props) {
         {cards?.length > 0 ? (
           cards?.map((card) => (
             <Col xs={24} sm={12} md={8} lg={6} key={card.id}>
-              <CardComponent {...card} />
+              <CardComponent {...card} loading={loading} />
             </Col>
           ))
         ) : (

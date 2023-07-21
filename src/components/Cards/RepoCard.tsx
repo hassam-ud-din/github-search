@@ -1,16 +1,25 @@
-import React from "react"
+import { Space } from "antd"
+import { Card } from "antd"
+import { LinkOutlined } from "@ant-design/icons"
+import { RepoType } from "../../types/api"
 
-type Props = {
-  id: number
-  url: string
-}
-
-function RepoCard({ id, url }: Props) {
+function RepoCard(repo: RepoType) {
   return (
-    <div>
-      <p>{id}</p>
-      <p>{url}</p>
-    </div>
+    <Space direction="vertical">
+      <Card
+        loading={repo.loading}
+        title={repo.name}
+        extra={
+          <a href={repo.html_url}>
+            <LinkOutlined />
+          </a>
+        }
+        style={{ width: 300 }}
+      >
+        <p>{repo.id}</p>
+        {/* <p>{repo.url}</p> */}
+      </Card>
+    </Space>
   )
 }
 

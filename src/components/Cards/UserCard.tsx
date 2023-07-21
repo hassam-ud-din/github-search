@@ -1,28 +1,22 @@
-import React from "react"
 import { Space, Card } from "antd"
 import { LinkOutlined } from "@ant-design/icons"
+import { UserType } from "../../types/api"
 
-type Props = {
-  id: number
-  login: string
-  url: string
-  html_url: string
-}
-
-function UserCard({ id, url, html_url, login }: Props) {
+function UserCard(user: UserType) {
   return (
     <Space direction="vertical">
       <Card
-        title={login}
+        loading={user.loading}
+        title={user.login}
         extra={
-          <a href={html_url}>
+          <a href={user.html_url}>
             <LinkOutlined />
           </a>
         }
         style={{ width: 300 }}
       >
-        <p>{id}</p>
-        <p>{url}</p>
+        <p>{user.id}</p>
+        <p>{user.url}</p>
       </Card>
     </Space>
   )

@@ -2,28 +2,31 @@ import React, { useEffect, useState } from "react"
 import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
 import CategoryFilter from "../components/Search/CategoryFilter"
-import { Space } from "antd"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { setQuery, setSearchCategory, setSearchData } from "../features/search/searchSlice"
 import { searchGithub } from "../services/api"
 import CardList from "../components/Cards/CardList"
+import useInfiniteScroll, { UseInfiniteScrollResult } from "../hooks/useInfiniteScroll"
+import { APIOptions, RepoType, UserType } from "../types/api"
+import { CategoriesType } from "../types/api"
 
-type Props = {}
-
-function SearchContainer({}: Props) {
+function SearchContainer() {
   const dispatch = useAppDispatch()
+  const [isComponentMounted, setIsComponentMounted] = useState(false)
+  const delayInMs: number = 1000
+  const [nextPage, setNextPage] = useState<number>(2)
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const categories = [
+  const categories: CategoriesType = [
     { value: "users", label: "User" },
     { value: "repositories", label: "Repos" },
   ]
 
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    useAppSelector((state) => state.search.category)
+    useAppSelector((state) => state.search.category) || categories[0].value
   )
 
-  // replace 'any' with a concrete type
-  const [results, setResults] = useState<Array<any>>(
+  const [results, setResults] = useState<Array<UserType | RepoType>>(
     useAppSelector((state) => state.search.data)
   )
 
@@ -31,35 +34,58 @@ function SearchContainer({}: Props) {
     useAppSelector((state) => state.search.query)
   )
 
-  const [isComponentMounted, setIsComponentMounted] = useState(false)
-
-  const debounceDelay: number = 1000 // in milliseconds
-
-  // callback function for useDebounce hook
-  const search = async () => {
-    if (searchTerm.length >= 3) {
-      const options = {
-        q: searchTerm,
-        per_page: 12,
-      }
-      const data = await searchGithub(selectedCategory, options)
-      console.log("data", data)
-
-      dispatch(setQuery(searchTerm))
-      dispatch(setSearchCategory(selectedCategory))
-      dispatch(setSearchData(data.items))
-
-      setResults(data.items)
-    }
-  }
-
   useEffect(() => {
-    // preventing the api call if have persisted state
+    // prevent the api call if have persisted state
     setIsComponentMounted(true)
     if (isComponentMounted) debouncedSearch()
   }, [selectedCategory])
 
-  const debouncedSearch = useDebounce(search, debounceDelay)
+  // callback function for useDebounce hook
+  const search = async () => {
+    if (searchTerm.length >= 3) {
+      try {
+        setLoading(true)
+        const options: APIOptions = {
+          q: searchTerm,
+        }
+        const data = await searchGithub(selectedCategory, options)
+
+        console.log("data", data)
+
+        dispatch(setQuery(searchTerm))
+        dispatch(setSearchCategory(selectedCategory))
+        dispatch(setSearchData(data.items))
+
+        setResults(data.items)
+        setNextPage(2)
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const debouncedSearch = useDebounce(search, delayInMs)
+
+  const fetchMore = async () => {
+    try {
+      const options: APIOptions = {
+        q: searchTerm,
+        page: nextPage,
+      }
+      const data = await searchGithub(selectedCategory, options)
+      //*** Optimise this by using use ref and not sending the request if state is not changed ***
+      // if (data.items === results) return
+
+      setResults([...results, ...data.items])
+      setNextPage((prevPage) => prevPage + 1)
+      setIsFetching(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const [isFetching, setIsFetching]: UseInfiniteScrollResult = useInfiniteScroll(fetchMore)
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -78,7 +104,7 @@ function SearchContainer({}: Props) {
         categories={categories}
         handleCategoryChange={handleCategoryChange}
       />
-      <CardList category={selectedCategory} cards={results} />
+      <CardList category={selectedCategory} cards={results} loading={loading} />
     </React.Fragment>
   )
 }

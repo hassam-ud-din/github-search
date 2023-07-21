@@ -1,16 +1,9 @@
 import { Octokit } from "octokit"
+import { APIOptions } from "../types/api"
 // Octokit.js
 // https://github.com/octokit/core.js#readme
 
-export type OptionParams = {
-  q: string
-  sort?: "followers" | "repositories" | "joined"
-  order?: "desc" | "asc"
-  per_page?: number
-  page?: number
-}
-
-export const searchGithub = async (category: string, options: OptionParams) => {
+export const searchGithub = async (category: string, options: APIOptions) => {
   const octokit = new Octokit({
     auth: process.env.GITHUB_ACCESS_TOKEN,
   })
