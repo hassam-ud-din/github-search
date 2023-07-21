@@ -4,7 +4,8 @@ import { persistReducer } from "redux-persist"
 import { combineReducers } from "@reduxjs/toolkit"
 import { persistStore } from "redux-persist"
 import thunk from "redux-thunk"
-import searchReducer from "../features/search/searchSlice"
+import searchReducer from "../features/searchSlice"
+import themeReducer from "../features/themeSlice"
 
 const persistConfig = {
   key: "root",
@@ -13,6 +14,7 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
+  theme: themeReducer,
   search: searchReducer,
 })
 

@@ -3,12 +3,14 @@ import SearchField from "../components/Search/SearchField"
 import useDebounce from "../hooks/useDebounce"
 import CategoryFilter from "../components/Search/CategoryFilter"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { setQuery, setSearchCategory, setSearchData } from "../features/search/searchSlice"
+import { setQuery, setSearchCategory, setSearchData } from "../features/searchSlice"
 import { searchGithub } from "../services/api"
 import CardList from "../components/Cards/CardList"
 import useInfiniteScroll, { UseInfiniteScrollResult } from "../hooks/useInfiniteScroll"
 import { APIOptions, RepoType, UserType } from "../types/api"
 import { CategoriesType } from "../types/api"
+import ThemeSwitcher from "../components/ThemeSwitcher"
+import { Layout, Space } from "antd"
 
 function SearchContainer() {
   const dispatch = useAppDispatch()
@@ -97,15 +99,20 @@ function SearchContainer() {
   }
 
   return (
-    <React.Fragment>
-      <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        categories={categories}
-        handleCategoryChange={handleCategoryChange}
-      />
-      <CardList category={selectedCategory} cards={results} loading={loading} />
-    </React.Fragment>
+    <Layout style={{ padding: "0 60px" }}>
+      <Space>
+        <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+        <CategoryFilter
+          selectedCategory={selectedCategory}
+          categories={categories}
+          handleCategoryChange={handleCategoryChange}
+        />
+        <ThemeSwitcher />
+      </Space>
+      {searchTerm.length >= 3 && (
+        <CardList category={selectedCategory} cards={results} loading={loading} />
+      )}
+    </Layout>
   )
 }
 

@@ -1,13 +1,13 @@
 import "./App.css"
-import { token } from "./assets/styles/theme"
 import SearchContainer from "./containers/SearchContainer"
-import { ConfigProvider } from "antd"
+import { ConfigProvider, theme } from "antd"
+import ThemeProvider from "./containers/ThemeProvider"
 
 function App() {
   return (
-    <ConfigProvider theme={{ token: token }}>
+    <ThemeProvider>
       <SearchContainer />
-    </ConfigProvider>
+    </ThemeProvider>
   )
 }
 

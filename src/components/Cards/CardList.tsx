@@ -29,7 +29,7 @@ function CardList({ category, cards, loading }: Props) {
 
   return (
     <div>
-      <Divider orientation="left">Cards</Divider>
+      <Divider></Divider>
       <Row>
         {cards?.length > 0 ? (
           cards?.map((card) => (
