@@ -10,7 +10,11 @@ import useInfiniteScroll, { UseInfiniteScrollResult } from "../hooks/useInfinite
 import { APIOptions, RepoType, UserType } from "../types/api"
 import { CategoriesType } from "../types/api"
 import ThemeSwitcher from "../components/ThemeSwitcher"
-import { Layout, Space } from "antd"
+import { Row, Col, Space, Divider } from "antd"
+import GithubLogo from "../components/GithubLogo"
+import PageTitle from "../components/PageTitle"
+import LoadingCards from "../components/Cards/LoadingCards"
+import { CARDS_PER_PAGE, MIN_SEARCH_LENGTH } from "../constants"
 
 function SearchContainer() {
   const dispatch = useAppDispatch()
@@ -44,23 +48,23 @@ function SearchContainer() {
 
   // callback function for useDebounce hook
   const search = async () => {
-    if (searchTerm.length >= 3) {
+    if (searchTerm.length >= MIN_SEARCH_LENGTH) {
       try {
         setLoading(true)
+
         const options: APIOptions = {
           q: searchTerm,
+          per_page: CARDS_PER_PAGE,
         }
         const data = await searchGithub(selectedCategory, options)
-
-        console.log("data", data)
 
         dispatch(setQuery(searchTerm))
         dispatch(setSearchCategory(selectedCategory))
         dispatch(setSearchData(data.items))
 
+        setLoading(false)
         setResults(data.items)
         setNextPage(2)
-        setLoading(false)
       } catch (error) {
         console.log(error)
       }
@@ -73,6 +77,7 @@ function SearchContainer() {
     try {
       const options: APIOptions = {
         q: searchTerm,
+        per_page: CARDS_PER_PAGE,
         page: nextPage,
       }
       const data = await searchGithub(selectedCategory, options)
@@ -99,20 +104,47 @@ function SearchContainer() {
   }
 
   return (
-    <Layout style={{ padding: "0 60px" }}>
-      <Space>
-        <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          categories={categories}
-          handleCategoryChange={handleCategoryChange}
-        />
-        <ThemeSwitcher />
+    <React.Fragment>
+      <Space
+        direction="vertical"
+        className={`width400 ${searchTerm.length < MIN_SEARCH_LENGTH ? "center" : ""}`}
+      >
+        <Row gutter={[16, 16]} align={"middle"}>
+          <Col>
+            <GithubLogo />
+          </Col>
+          <Col flex="auto">
+            <PageTitle />
+          </Col>
+          <Col>
+            <ThemeSwitcher />
+          </Col>
+        </Row>
+        <Row gutter={[16, 16]}>
+          <Col flex="auto">
+            <SearchField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+          </Col>
+          <Col>
+            <CategoryFilter
+              selectedCategory={selectedCategory}
+              categories={categories}
+              handleCategoryChange={handleCategoryChange}
+            />
+          </Col>
+        </Row>
       </Space>
-      {searchTerm.length >= 3 && (
-        <CardList category={selectedCategory} cards={results} loading={loading} />
+
+      <Divider />
+      {loading ? (
+        <LoadingCards />
+      ) : (
+        searchTerm.length >= MIN_SEARCH_LENGTH && (
+          <CardList category={selectedCategory} cards={results} loading={loading} />
+        )
       )}
-    </Layout>
+
+      {isFetching && <LoadingCards />}
+    </React.Fragment>
   )
 }
 

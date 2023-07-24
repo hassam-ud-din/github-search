@@ -1,24 +1,22 @@
-import { Space, Card } from "antd"
-import { LinkOutlined } from "@ant-design/icons"
+import { Skeleton, Card, Avatar } from "antd"
 import { UserType } from "../../types/api"
 
+const { Meta } = Card
 function UserCard(user: UserType) {
+  const handleClick = () => {}
+
   return (
-    <Space direction="vertical">
-      <Card
-        loading={user.loading}
-        title={user.login}
-        extra={
-          <a href={user.html_url}>
-            <LinkOutlined />
-          </a>
-        }
-        style={{ width: 300 }}
-      >
-        <p>{user.id}</p>
-        <p>{user.url}</p>
+    <a href={`${user.html_url}`} target="_blank">
+      <Card hoverable>
+        <Skeleton loading={false} avatar active>
+          <Meta
+            avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
+            title={user.login}
+            description={`id: ${user.id}`}
+          />
+        </Skeleton>
       </Card>
-    </Space>
+    </a>
   )
 }
 
