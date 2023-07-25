@@ -1,9 +1,21 @@
-import React from "react"
+import { Skeleton, Avatar } from "antd"
+import { Card } from "antd"
+import { RepoType } from "../../types/api"
 
-type Props = {}
+const { Meta } = Card
 
-function RepoCard({}: Props) {
-  return <div>RepoCard</div>
+function RepoCard(repo: RepoType) {
+  return (
+    <Card>
+      <Skeleton loading={false} avatar active>
+        <Meta
+          avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
+          title={repo.name}
+          description={`id: ${repo.id}`}
+        />
+      </Skeleton>
+    </Card>
+  )
 }
 
 export default RepoCard

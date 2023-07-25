@@ -10,6 +10,7 @@ function SearchField({ searchTerm, handleSearchChange }: Props) {
   return (
     <Input
       type="text"
+      name="search"
       placeholder="Start typing to search .."
       value={searchTerm}
       onChange={handleSearchChange}

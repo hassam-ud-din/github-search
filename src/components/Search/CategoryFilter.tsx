@@ -1,8 +1,9 @@
 import { Select } from "antd"
+import { CategoriesType } from "../../types/api"
 
 type Props = {
   selectedCategory: string
-  categories: { value: string; label: string }[]
+  categories: CategoriesType
   handleCategoryChange: (newCategory: string) => void
 }
 
@@ -13,7 +14,7 @@ function CategoryFilter({ selectedCategory, categories, handleCategoryChange }: 
 
   return (
     <Select
-      defaultValue={defaultValue}
+      defaultValue={defaultValue ? defaultValue : categories[0].label}
       style={{ width: 100 }}
       onChange={handleCategoryChange}
       options={categories}
