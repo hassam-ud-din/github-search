@@ -10,7 +10,7 @@ import themeReducer from "../features/themeSlice"
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["search"],
+  whitelist: ["search", "theme"],
 }
 
 const rootReducer = combineReducers({

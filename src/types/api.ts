@@ -2,8 +2,12 @@ export type UserType = {
   loading: boolean
   id: number
   login: string
-  url: string
   html_url: string
+  followers: number
+  name: string
+  public_repos: number
+  location: string
+  avatar_url: string
 }
 
 export type RepoType = {

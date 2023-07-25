@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 type CallbackFunction = (...args: any[]) => Promise<void>
 export type UseInfiniteScrollResult = [boolean, (newValue: boolean) => void]

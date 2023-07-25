@@ -9,11 +9,7 @@ function UserCard(user: UserType) {
     <a href={`${user.html_url}`} target="_blank">
       <Card hoverable>
         <Skeleton loading={false} avatar active>
-          <Meta
-            avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
-            title={user.login}
-            description={`id: ${user.id}`}
-          />
+          <Meta avatar={<Avatar src={`${user.avatar_url}`} />} title={user.login} />
         </Skeleton>
       </Card>
     </a>

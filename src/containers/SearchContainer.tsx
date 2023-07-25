@@ -57,7 +57,7 @@ function SearchContainer() {
           per_page: CARDS_PER_PAGE,
         }
         const data = await searchGithub(selectedCategory, options)
-
+        console.log("data", data)
         dispatch(setQuery(searchTerm))
         dispatch(setSearchCategory(selectedCategory))
         dispatch(setSearchData(data.items))
@@ -134,12 +134,16 @@ function SearchContainer() {
         </Row>
       </Space>
 
-      <Divider />
       {loading ? (
-        <LoadingCards />
+        <React.Fragment>
+          <LoadingCards />
+        </React.Fragment>
       ) : (
         searchTerm.length >= MIN_SEARCH_LENGTH && (
-          <CardList category={selectedCategory} cards={results} loading={loading} />
+          <React.Fragment>
+            <Divider />
+            <CardList category={selectedCategory} cards={results} loading={loading} />
+          </React.Fragment>
         )
       )}
 

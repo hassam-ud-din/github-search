@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useSelector } from "react-redux"
 import { darkThemeToken, lightThemeToken } from "../assets/styles/themes"
 import { ConfigProvider } from "antd"
@@ -24,15 +24,6 @@ function ThemeProvider({ children }: Props) {
 
   // custom tokens for dark and light mode
   const token = darkMode ? darkThemeToken : lightThemeToken
-
-  useEffect(() => {
-    // Set the background color of the body element based on the theme
-    if (darkMode) {
-      document.body.style.backgroundColor = token.colorBgBase
-    } else {
-      document.body.style.backgroundColor = "#fff"
-    }
-  }, [darkMode, token])
 
   return (
     <ConfigProvider
