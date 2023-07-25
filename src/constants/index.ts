@@ -1,4 +1,4 @@
-export const CARDS_PER_PAGE = 32 // keep multiples of 2 for better UX
+export const CARDS_PER_PAGE = 24 // keep multiples of 4 for better UX
 
 export const MIN_SEARCH_LENGTH = 3
 

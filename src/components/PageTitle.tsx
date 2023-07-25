@@ -1,5 +1,4 @@
 import React from "react"
-import { Space } from "antd"
 import { Typography } from "antd"
 
 const { Title, Text } = Typography

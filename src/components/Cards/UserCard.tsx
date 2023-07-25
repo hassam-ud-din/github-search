@@ -3,10 +3,8 @@ import { UserType } from "../../types/api"
 
 const { Meta } = Card
 function UserCard(user: UserType) {
-  const handleClick = () => {}
-
   return (
-    <a href={`${user.html_url}`} target="_blank">
+    <a href={`${user.html_url}`} target="_blank" rel="noreferrer">
       <Card hoverable>
         <Skeleton loading={false} avatar active>
           <Meta avatar={<Avatar src={`${user.avatar_url}`} />} title={user.login} />

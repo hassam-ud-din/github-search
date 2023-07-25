@@ -1,32 +1,36 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-type CallbackFunction = (...args: any[]) => Promise<void>
-export type UseInfiniteScrollResult = [boolean, (newValue: boolean) => void]
+type CallbackFunction = () => Promise<void>
 
-const useInfiniteScroll = (callback: CallbackFunction): UseInfiniteScrollResult => {
-  const [isFetching, setIsFetching] = useState<boolean>(false)
-
-  useEffect(() => {
-    window.addEventListener("scroll", isScrolling)
-    return () => window.removeEventListener("scroll", isScrolling)
-  }, [])
+function useInfiniteScroll(callback: CallbackFunction) {
+  const observerRef = useRef<HTMLDivElement | null>(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!isFetching) return
-    callback()
-  }, [isFetching])
+    const options = {
+      root: null, // Use viewport as the root
+      rootMargin: "0px",
+      threshold: 1, // Use 0 threshold to trigger when the element becomes even partially visible
+    }
 
-  function isScrolling() {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      isFetching
-    )
-      return
-    setIsFetching(true)
-  }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(async (entry) => {
+        if (!loading && entry.isIntersecting && entry.target === observerRef.current) {
+          setLoading(true)
+          await callback()
+          setLoading(false)
+        }
+      })
+    }, options)
 
-  return [isFetching, setIsFetching]
+    if (observerRef.current) observer.observe(observerRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [callback, loading])
+
+  return observerRef
 }
 
 export default useInfiniteScroll
