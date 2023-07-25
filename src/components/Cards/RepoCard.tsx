@@ -6,15 +6,17 @@ const { Meta } = Card
 
 function RepoCard(repo: RepoType) {
   return (
-    <Card>
-      <Skeleton loading={false} avatar active>
-        <Meta
-          avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2" />}
-          title={repo.name}
-          description={`id: ${repo.id}`}
-        />
-      </Skeleton>
-    </Card>
+    <a href={repo.html_url} target="_blank" rel="noreferrer">
+      <Card>
+        <Skeleton loading={false} avatar active>
+          <Meta
+            avatar={<Avatar src={repo?.owner?.avatar_url} />}
+            title={repo.full_name}
+            description={repo.open_issues + repo.watchers + repo.forks}
+          />
+        </Skeleton>
+      </Card>
+    </a>
   )
 }
 

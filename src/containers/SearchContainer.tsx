@@ -156,7 +156,7 @@ function SearchContainer() {
         searchTerm.length >= MIN_SEARCH_LENGTH && (
           <Fragment>
             <Divider />
-            <CardList category={selectedCategory} cards={results} loading={loading} />
+            <CardList category={selectedCategory} cards={results} />
           </Fragment>
         )
       )}

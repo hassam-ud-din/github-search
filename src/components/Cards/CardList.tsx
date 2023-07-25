@@ -22,10 +22,9 @@ const cardComponents: CardComponentMap = {
 type Props = {
   category: string
   cards: Array<UserType | RepoType>
-  loading: boolean
 }
 
-function CardList({ category, cards, loading }: Props) {
+function CardList({ category, cards }: Props) {
   const CardComponent = cardComponents[category]
 
   return (
@@ -34,7 +33,7 @@ function CardList({ category, cards, loading }: Props) {
         {cards?.length > 0 &&
           cards?.map((card) => (
             <Col xs={24} sm={12} md={8} lg={6} key={card.id}>
-              <CardComponent {...card} loading={loading} />
+              <CardComponent {...card} />
             </Col>
           ))}
       </Row>
