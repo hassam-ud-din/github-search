@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react"
+import React, { Fragment, useState } from "react"
 import useDebounce from "../hooks/useDebounce"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { setQuery, setSearchCategory, setSearchData } from "../features/searchSlice"
