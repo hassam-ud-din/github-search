@@ -13,6 +13,7 @@ export type RepoType = {
   html_url: string
   forks: number
   open_issues: number
+  description: string
   watchers: number
   created_at: string
   owner: UserType

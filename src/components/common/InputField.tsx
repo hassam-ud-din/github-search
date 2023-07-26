@@ -6,7 +6,7 @@ type Props = {
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function SearchField({ searchTerm, handleSearchChange }: Props) {
+function InputField({ searchTerm, handleSearchChange }: Props) {
   return (
     <Input
       type="text"
@@ -18,4 +18,4 @@ function SearchField({ searchTerm, handleSearchChange }: Props) {
   )
 }
 
-export default SearchField
+export default InputField
