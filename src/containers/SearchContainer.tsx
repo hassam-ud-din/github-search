@@ -18,7 +18,6 @@ type Props = {
 
 function SearchContainer({ categories }: Props) {
   const dispatch = useAppDispatch()
-  const [isComponentMounted, setIsComponentMounted] = useState(false)
   const delayInMs: number = 1000
   const [nextPage, setNextPage] = useState<number>(2)
   const [loading, setLoading] = useState<boolean>(false)
@@ -71,11 +70,6 @@ function SearchContainer({ categories }: Props) {
 
   const debouncedSearch = useDebounce(search, delayInMs)
 
-  useEffect(() => {
-    // prevent the api call if have persisted state
-    setIsComponentMounted(true)
-  }, [])
-
   const fetchMore = async () => {
     try {
       if (isFetching || !hasMoreResults) {
@@ -94,7 +88,7 @@ function SearchContainer({ categories }: Props) {
       if (data.items.length === 0) {
         setHasMoreResults(false)
       } else {
-        setResults((prevResults) => [...prevResults, ...data.items])
+        setResults([...results, ...data.items])
         setNextPage((prevPage) => prevPage + 1)
       }
 
@@ -119,7 +113,7 @@ function SearchContainer({ categories }: Props) {
   const observerRef = useInfiniteScroll(fetchMore)
 
   return (
-    <Layout style={{ paddingBottom: 16 }}>
+    <Layout style={{ paddingBottom: searchTerm.length < MIN_SEARCH_LENGTH ? 0 : 16 }}>
       <Search
         searchTerm={searchTerm}
         categories={categories}

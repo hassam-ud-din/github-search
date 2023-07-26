@@ -1,7 +1,7 @@
 import React from "react"
 import { Layout, Col, Row } from "antd"
-import UserCard from "./Cards/UserCard"
-import RepoCard from "./Cards/RepoCard"
+import UserCard from "./cards/UserCard"
+import RepoCard from "./cards/RepoCard"
 import { RepoType, UserType } from "../types/api"
 
 type CardComponentMap = {

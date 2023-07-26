@@ -7,15 +7,13 @@
 .container {
   padding-left: 6.25rem;
   padding-right: 6.25rem;
-  /* max-width: 1000px; */
-  /* margin: auto; */
 }
 
 .center {
   height: 100vh;
   justify-content: center;
   margin: 0 auto;
-  padding-top: 0px !important;
+  padding: 0 !important;
 }
 
 .width400 {
