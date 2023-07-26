@@ -1,21 +1,22 @@
 export type UserType = {
-  loading: boolean
   id: number
   login: string
   html_url: string
-  followers: number
-  name: string
-  public_repos: number
-  location: string
   avatar_url: string
 }
 
 export type RepoType = {
-  loading: boolean
   id: number
   name: string
+  full_name: string
   url: string
   html_url: string
+  forks: number
+  open_issues: number
+  description: string
+  watchers: number
+  created_at: string
+  owner: UserType
 }
 
 export type APIOptions = {

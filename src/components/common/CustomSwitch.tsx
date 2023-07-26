@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Switch } from "antd"
-import { toggleTheme } from "../features/themeSlice"
+import { toggleTheme } from "../../features/themeSlice"
 
 type RootState = {
   theme: {
@@ -9,7 +9,7 @@ type RootState = {
   }
 }
 
-function ThemeSwitcher() {
+function CustomSwitch() {
   const dispatch = useDispatch()
   const darkMode = useSelector((state: RootState) => state.theme.darkMode)
 
@@ -28,4 +28,4 @@ function ThemeSwitcher() {
   )
 }
 
-export default ThemeSwitcher
+export default CustomSwitch

@@ -7,7 +7,7 @@ type Props = {
   handleCategoryChange: (newCategory: string) => void
 }
 
-function CategoryFilter({ selectedCategory, categories, handleCategoryChange }: Props) {
+function Dropdown({ selectedCategory, categories, handleCategoryChange }: Props) {
   const defaultValue = categories.find(
     (category) => category.value === selectedCategory
   )?.label
@@ -22,4 +22,4 @@ function CategoryFilter({ selectedCategory, categories, handleCategoryChange }: 
   )
 }
 
-export default CategoryFilter
+export default Dropdown

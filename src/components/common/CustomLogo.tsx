@@ -1,9 +1,7 @@
-// GithubLogo.tsx
-import React from "react"
 import { useSelector } from "react-redux"
 import { Avatar } from "antd"
-import GithubLogoBlack from "../assets/images/github-mark.svg"
-import GithubLogoWhite from "../assets/images/github-mark-white.svg"
+import GithubLogoBlack from "../../assets/images/github-mark.svg"
+import GithubLogoWhite from "../../assets/images/github-mark-white.svg"
 
 type RootState = {
   theme: {
