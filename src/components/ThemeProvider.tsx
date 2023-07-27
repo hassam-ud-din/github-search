@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import * as lightTheme from "../ant-tokens/light.json"
 import * as darkTheme from "../ant-tokens/dark.json"
@@ -17,6 +17,10 @@ type Props = {
 function ThemeProvider({ children }: Props) {
   const darkMode = useSelector((state: RootState) => state.theme.darkMode)
   const token = darkMode ? darkTheme : lightTheme
+
+  useEffect(() => {
+    document.documentElement.style.backgroundColor = token.colorBgDocument
+  }, [darkMode])
 
   return (
     <ConfigProvider

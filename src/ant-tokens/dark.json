@@ -3,5 +3,6 @@
   "colorSuccess": "#52c41a",
   "colorWarning": "#faad14",
   "colorError": "#ff4d4f",
-  "colorInfo": "#1677ff"
+  "colorInfo": "#1677ff",
+  "colorBgDocument": "#000"
 }
