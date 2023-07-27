@@ -1,5 +1,5 @@
 import { Layout, Row, Col, Card, Skeleton } from "antd"
-import { CARDS_PER_PAGE, LOADING_ACTIVE_PARAGRAPHS } from "../constants"
+import { CARDS_PER_PAGE, LOADING_ACTIVE_PARAGRAPHS } from "../shared/constants"
 
 function LoadingCards() {
   return (

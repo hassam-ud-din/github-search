@@ -5,15 +5,14 @@ import { setQuery, setSearchCategory, setSearchData } from "../features/searchSl
 import { searchGithub } from "../services/api"
 import CardList from "../components/CardList"
 import useInfiniteScroll from "../hooks/useInfiniteScroll"
-import { APIOptions, RepoType, UserType } from "../types/api"
-import { CategoriesType } from "../types/api"
+import { APIOptions, CategoryType, RepoType, UserType } from "../shared/types"
 import { Divider, Layout } from "antd"
 import LoadingCards from "../components/LoadingCards"
 import Search from "../components/Search"
-import { CARDS_PER_PAGE, MIN_SEARCH_LENGTH } from "../constants"
+import { CARDS_PER_PAGE, MIN_SEARCH_LENGTH } from "../shared/constants"
 
 type Props = {
-  categories: CategoriesType
+  categories: Array<CategoryType>
 }
 
 function SearchContainer({ categories }: Props) {

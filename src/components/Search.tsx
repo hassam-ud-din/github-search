@@ -1,15 +1,15 @@
 import { Row, Space, Col, Typography } from "antd"
 import React from "react"
-import { MIN_SEARCH_LENGTH } from "../constants"
+import { MIN_SEARCH_LENGTH } from "../shared/constants"
 import CustomSwitch from "./common/CustomSwitch"
 import InputField from "./common/InputField"
 import Dropdown from "./common/Dropdown"
 import CustomLogo from "./common/CustomLogo"
-import { CategoriesType } from "../types/api"
+import { CategoryType } from "../shared/types"
 
 type Props = {
   searchTerm: string
-  categories: CategoriesType
+  categories: Array<CategoryType>
   selectedCategory: string
   handleCategoryChange: (newCategory: string) => void
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void

@@ -1,6 +1,6 @@
 import { Skeleton, Avatar, Row, Col, Typography } from "antd"
 import { Card } from "antd"
-import { RepoType } from "../../types/api"
+import { RepoType } from "../../shared/types"
 import { ForkOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons"
 import { Fragment } from "react"
 

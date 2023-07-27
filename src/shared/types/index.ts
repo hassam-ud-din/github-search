@@ -27,4 +27,4 @@ export type APIOptions = {
   page?: number
 }
 
-export type CategoriesType = { value: string; label: string }[]
+export type CategoryType = { value: string; label: string }

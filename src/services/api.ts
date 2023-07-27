@@ -1,5 +1,5 @@
 import { Octokit } from "octokit"
-import { APIOptions } from "../types/api"
+import { APIOptions } from "../shared/types"
 // https://github.com/octokit/core.js#readme
 
 export const searchGithub = async (category: string, options: APIOptions) => {

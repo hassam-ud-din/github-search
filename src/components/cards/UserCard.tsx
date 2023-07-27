@@ -1,5 +1,5 @@
 import { Skeleton, Card, Avatar, Space, Typography } from "antd"
-import { UserType } from "../../types/api"
+import { UserType } from "../../shared/types"
 import { Fragment } from "react"
 import { NumberOutlined } from "@ant-design/icons"
 

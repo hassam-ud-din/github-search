@@ -21,6 +21,19 @@
   max-width: 25rem;
 }
 
+.not-found {
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 10rem;
+  margin-bottom: 0;
+}
+
+.not-found span {
+  font-size: 1.2rem;
+}
+
 @media only screen and (max-width: 768px) {
   .container {
     padding-left: 3.125rem;
@@ -32,5 +45,8 @@
   .container {
     padding-left: 0.625rem;
     padding-right: 0.625rem;
+  }
+  .not-found h1 {
+    font-size: 5rem;
   }
 }

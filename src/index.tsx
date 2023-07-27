@@ -1,3 +1,4 @@
+import "./index.css"
 import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App"
@@ -5,6 +6,8 @@ import { persistor, store } from "./app/store"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import NotFound from "./components/common/NotFound"
+import ThemeProvider from "./components/ThemeProvider"
 
 const router = createBrowserRouter([
   {
@@ -13,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <p>404 - Page Not Found</p>,
+    element: <NotFound />,
   },
 ])
 
@@ -23,7 +26,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>
