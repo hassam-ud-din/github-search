@@ -1,0 +1,52 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  padding-left: 6.25rem;
+  padding-right: 6.25rem;
+}
+
+.center {
+  height: 100vh;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 !important;
+}
+
+.width400 {
+  padding-top: 1.25rem;
+  max-width: 25rem;
+}
+
+.not-found {
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 10rem;
+  margin-bottom: 0;
+}
+
+.not-found span {
+  font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    padding-left: 3.125rem;
+    padding-right: 3.125rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+  .not-found h1 {
+    font-size: 5rem;
+  }
+}
