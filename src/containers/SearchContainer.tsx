@@ -6,7 +6,7 @@ import { searchGithub } from "../services/api"
 import CardList from "../components/CardList"
 import useInfiniteScroll from "../hooks/useInfiniteScroll"
 import { APIOptions, CategoryType, RepoType, UserType } from "../shared/types"
-import { Divider, Layout } from "antd"
+import { Divider, Layout, Alert } from "antd"
 import LoadingCards from "../components/LoadingCards"
 import Search from "../components/Search"
 import { CARDS_PER_PAGE, MIN_SEARCH_LENGTH } from "../shared/constants"
@@ -22,6 +22,7 @@ function SearchContainer({ categories }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [hasMoreResults, setHasMoreResults] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
   const [selectedCategory, setSelectedCategory] = useState<string>(
     useAppSelector((state) => state.search.category) || categories[0].value
@@ -39,6 +40,7 @@ function SearchContainer({ categories }: Props) {
   const search = useCallback(async () => {
     if (searchTerm.length >= MIN_SEARCH_LENGTH) {
       try {
+        setError(null)
         setHasMoreResults(true)
         setLoading(true)
 
@@ -50,18 +52,19 @@ function SearchContainer({ categories }: Props) {
 
         if (data.items.length === 0) {
           setHasMoreResults(false)
+          setError("No results found")
         } else {
           dispatch(setQuery(searchTerm))
           dispatch(setSearchCategory(selectedCategory))
           dispatch(setSearchData(data.items))
         }
 
-        setLoading(false)
         setResults(data.items)
         setNextPage(2)
       } catch (error) {
-        console.log(error)
+        setError((error as Error).message)
         setHasMoreResults(false)
+      } finally {
         setLoading(false)
       }
     }
@@ -75,6 +78,7 @@ function SearchContainer({ categories }: Props) {
         return
       }
 
+      setError(null)
       setIsFetching(true)
 
       const options: APIOptions = {
@@ -90,11 +94,10 @@ function SearchContainer({ categories }: Props) {
         setResults([...results, ...data.items])
         setNextPage((prevPage) => prevPage + 1)
       }
-
-      setIsFetching(false)
     } catch (error) {
-      console.log(error)
+      setError((error as Error).message)
       setHasMoreResults(false)
+    } finally {
       setIsFetching(false)
     }
   }, [selectedCategory, searchTerm, isFetching, hasMoreResults, nextPage, results])
@@ -120,6 +123,7 @@ function SearchContainer({ categories }: Props) {
         handleCategoryChange={handleCategoryChange}
         handleSearchChange={handleSearchChange}
       />
+      {error && <Alert style={{ marginTop: 16 }} message={error} type="error" showIcon />}
       {loading ? (
         <Fragment>
           <Divider />
