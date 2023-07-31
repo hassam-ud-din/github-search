@@ -68,7 +68,7 @@ function SearchContainer({ categories }: Props) {
         setLoading(false)
       }
     }
-  }, [selectedCategory, searchTerm, MIN_SEARCH_LENGTH, dispatch])
+  }, [selectedCategory, searchTerm, dispatch])
 
   const debouncedSearch = useDebounce(search, delayInMs)
 

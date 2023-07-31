@@ -20,7 +20,7 @@ function ThemeProvider({ children }: Props) {
 
   useEffect(() => {
     document.documentElement.style.backgroundColor = token.colorBgDocument
-  }, [darkMode])
+  }, [darkMode, token.colorBgDocument])
 
   return (
     <ConfigProvider
