@@ -6,7 +6,7 @@ import { persistor, store } from "./app/store"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import NotFound from "./components/common/NotFound"
+import NotFound from "./components/NotFound"
 import ThemeProvider from "./components/ThemeProvider"
 
 const router = createBrowserRouter([
