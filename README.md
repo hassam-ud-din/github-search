@@ -1,46 +1,53 @@
-# Getting Started with Create React App
+# Github Searcher App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+![App Starting UI](https://github.com/hassam-ud-din/github-search/tree/main/src/assets/images/app-search-ui.png)
+![Data Fetching UI](https://github.com/hassam-ud-din/github-search/tree/main/src/assets/images/app-data-ui.png)
 
-In the project directory, you can run:
+Github Searcher App enables users to look up Github users or repositories using specific search criteria. Users have the option to narrow down their search results by selecting particular categories like "users" or "repositories".
 
-### `npm start`
+## Tools
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The user interface for the app was built in React.js and Ant Design. The program manages the search query, search category, and search results using Redux and Redux-persist. Based on user searches, the app communicates with the Github API to retrieve search results.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Search**: Users can utilize the input area to type a search keyword to find Github users or repositories. To prevent making too many API requests while the user is typing, the search is immediately initiated with a debounce effect.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Category Filter**: Users can choose a category to filter their search results, such as "users" or "repositories". The chosen category will affect how the search results are updated.
 
-### `npm run build`
+- **Infinite Scroll**: The app uses infinite scroll to load more search results as the user scrolls down the page.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Loading Feedback**: To ensure a seamless and responsive user experience, the app gives loading feedback to users during API requests and pagination.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Decisions and Reasons
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Debouncing for Search**: The app employs a debouncing approach to prevent making API calls for each keypress. This indicates that the search is not initiated until the user has stopped typing for the predetermined amount of time (in this case, 1000ms). This enhances the performance of the application and cuts down on pointless API calls.
 
-### `npm run eject`
+2. **State Management with Redux**: Redux state management centralizes the app's state and makes data from various components easily accessible. Additionally, it makes it possible for asynchronous events like API queries and loading feedback to be handled effectively.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. **Infinite Scroll**: The app leverages infinite scroll to load additional search results as the user scrolls down the page rather than displaying a "Load More" button. This reduces the need for further user involvement and offers a more seamless user experience.
+  
+4. **Design tokens**: The UI components in the app are created using the Ant Design library. Usage of design tokens allows for a consistent and adaptable design system.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. **Error Handling**: The app has error handling so that when an API request fails, error messages are sent to users. The Ant Design 'Alert' component is used to display error alerts.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6. **Code Organization**: The code of the application is organized into distinct components, hooks, and slices. This modular approach enhances the readability and maintainability of the code and makes testing simple.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+7. **Custom Hooks**: To handle particular functions in a reusable way, custom hooks such as `useDebounce` and `useInfiniteScroll` have been implemented. As a result, code duplication is decreased and code reuse is encouraged.
 
-## Learn More
+## Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To run the app locally, follow these steps:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone the repository to your local machine.
+2. Navigate to the project directory and install dependencies with `npm install`.
+3. Obtain a Github API token from https://github.com/settings/tokens (if needed).
+4. Create a `.env` file in the root of the project and add your API token as `GITHUB_ACCESS_TOKEN`.
+5. Start the development server with `npm start`.
+6. Open your web browser and go to `http://localhost:3000` to access the app.
+
+## Credits
+
+The Github Searcher app was created by Hassam Ud Din as part of the front-end training at [Carbonteq](https://www.carbonteq.com/). More information about the training roadmap on their [Dev Portal](https://dev-portal.carbonteq.com/docs/Training/react/githubsearch).
