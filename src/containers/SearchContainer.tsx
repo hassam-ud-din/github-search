@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react"
+import React, { Fragment, useState, useCallback } from "react"
 import useDebounce from "../hooks/useDebounce"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { setQuery, setSearchCategory, setSearchData } from "../features/searchSlice"
@@ -36,7 +36,7 @@ function SearchContainer({ categories }: Props) {
   )
 
   // callback function for useDebounce hook
-  const search = async () => {
+  const search = useCallback(async () => {
     if (searchTerm.length >= MIN_SEARCH_LENGTH) {
       try {
         setHasMoreResults(true)
@@ -65,11 +65,11 @@ function SearchContainer({ categories }: Props) {
         setLoading(false)
       }
     }
-  }
+  }, [selectedCategory, searchTerm, MIN_SEARCH_LENGTH, dispatch])
 
   const debouncedSearch = useDebounce(search, delayInMs)
 
-  const fetchMore = async () => {
+  const fetchMore = useCallback(async () => {
     try {
       if (isFetching || !hasMoreResults) {
         return
@@ -97,7 +97,7 @@ function SearchContainer({ categories }: Props) {
       setHasMoreResults(false)
       setIsFetching(false)
     }
-  }
+  }, [selectedCategory, searchTerm, isFetching, hasMoreResults, nextPage, results])
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)

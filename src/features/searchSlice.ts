@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { UserType, RepoType } from "../shared/types"
 interface SearchState {
   query: string
   category: string
-  data: any // Modify the data type as per your response structure
+  data: Array<UserType | RepoType>
 }
 
 const initialState: SearchState = {
   query: "",
   category: "",
-  data: null,
+  data: [],
 }
 
 const searchSlice = createSlice({
