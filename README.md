@@ -10,7 +10,7 @@ Github Searcher App enables users to look up Github users or repositories using 
 
 ## Tools
 
-The user interface for the app was built in React.js and Ant Design. The program manages the search query, search category, and search results using Redux and Redux-persist. Based on user searches, the app communicates with the Github API to retrieve search results.
+The user interface for the app was built in React.js with TypeScript and Ant Design. The program manages the search query, search category, and search results using Redux and Redux-persist. Based on user searches, the app communicates with the Github API to retrieve search results.
 
 ## Features
 
