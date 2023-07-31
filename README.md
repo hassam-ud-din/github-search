@@ -2,8 +2,8 @@
 
 ## Overview
 
-![App Starting UI](https://github.com/hassam-ud-din/github-search/tree/main/src/assets/images/app-search-ui.png)
-![Data Fetching UI](https://github.com/hassam-ud-din/github-search/tree/main/src/assets/images/app-data-ui.png)
+![App Starting UI](src/assets/images/app-search-ui.png)
+![Data Fetching UI](src/assets/images/app-data-ui.png)
 
 Github Searcher App enables users to look up Github users or repositories using specific search criteria. Users have the option to narrow down their search results by selecting particular categories like "users" or "repositories".
 
