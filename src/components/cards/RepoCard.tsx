@@ -1,13 +1,13 @@
 import { Skeleton, Avatar, Row, Col, Typography } from "antd"
 import { Card } from "antd"
-import { RepoType } from "../../shared/types"
+import { Repo } from "../../shared/types"
 import { ForkOutlined, EyeOutlined, InfoCircleOutlined } from "@ant-design/icons"
 import { Fragment } from "react"
 
 const { Meta } = Card
 const { Text } = Typography
 
-function RepoCard(repo: RepoType) {
+function RepoCard(repo: Repo) {
   const descriptionContent = (
     <Fragment>
       <Row justify={"space-between"}>

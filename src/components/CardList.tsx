@@ -2,7 +2,7 @@ import React from "react"
 import { Layout, Col, Row } from "antd"
 import UserCard from "./cards/UserCard"
 import RepoCard from "./cards/RepoCard"
-import { RepoType, UserType } from "../shared/types"
+import { APIData } from "../shared/types"
 
 type CardComponentMap = {
   [category: string]: React.ComponentType<any>
@@ -15,7 +15,7 @@ const cardComponents: CardComponentMap = {
 
 type Props = {
   category: string
-  cards: Array<UserType | RepoType>
+  cards: Array<APIData>
 }
 
 function CardList({ category, cards }: Props) {

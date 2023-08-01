@@ -5,11 +5,11 @@ import CustomSwitch from "./common/CustomSwitch"
 import InputField from "./common/InputField"
 import Dropdown from "./common/Dropdown"
 import CustomLogo from "./common/CustomLogo"
-import { CategoryType } from "../shared/types"
+import { Category } from "../shared/types"
 
 type Props = {
   searchTerm: string
-  categories: Array<CategoryType>
+  categories: Array<Category>
   selectedCategory: string
   handleCategoryChange: (newCategory: string) => void
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void

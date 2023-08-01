@@ -1,9 +1,9 @@
 import SearchContainer from "./containers/SearchContainer"
-import { CategoryType } from "./shared/types"
+import { Category } from "./shared/types"
 import { Layout } from "antd"
 
 function App() {
-  const categories: Array<CategoryType> = [
+  const categories: Array<Category> = [
     { value: "users", label: "User" },
     { value: "repositories", label: "Repos" },
   ]
