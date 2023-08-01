@@ -24,7 +24,7 @@ The user interface for the app was built in React.js with TypeScript and Ant Des
 
 1. **Debouncing for Search**: The app employs a debouncing approach to prevent making API calls for each keypress. This indicates that the search is not initiated until the user has stopped typing for the predetermined amount of time (in this case, 1000ms). This enhances the performance of the application and cuts down on pointless API calls.
 
-2. **State Management with Redux**: Redux state management centralizes the app's state and makes data from various components easily accessible. Additionally, it makes it possible for asynchronous events like API queries and loading feedback to be handled effectively.
+2. **State Management with Redux Toolkit**: Redux toolkit centralizes the app's state with less boilerplate code and makes data from various components easily accessible. Additionally, it makes it possible for asynchronous events like API queries and loading feedback to be handled effectively via thunk middleware.
 
 3. **Infinite Scroll**: The app leverages infinite scroll to load additional search results as the user scrolls down the page rather than displaying a "Load More" button. This reduces the need for further user involvement and offers a more seamless user experience.
   
@@ -32,7 +32,7 @@ The user interface for the app was built in React.js with TypeScript and Ant Des
 
 5. **Error Handling**: The app has error handling so that when an API request fails, error messages are sent to users. The Ant Design 'Alert' component is used to display error alerts.
 
-6. **Code Organization**: The code of the application is organized into distinct components, hooks, and slices. This modular approach enhances the readability and maintainability of the code and makes testing simple.
+6. **Code Organization**: The code of the application is organized into distinct components, hooks, and slices. This modular approach enhances the readability and maintainability of the code.
 
 7. **Custom Hooks**: To handle particular functions in a reusable way, custom hooks such as `useDebounce` and `useInfiniteScroll` have been implemented. As a result, code duplication is decreased and code reuse is encouraged.
 
