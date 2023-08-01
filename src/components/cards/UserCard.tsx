@@ -1,12 +1,12 @@
 import { Skeleton, Card, Avatar, Space, Typography } from "antd"
-import { UserType } from "../../shared/types"
+import { User } from "../../shared/types"
 import { Fragment } from "react"
 import { NumberOutlined } from "@ant-design/icons"
 
 const { Meta } = Card
 const { Text } = Typography
 
-function UserCard(user: UserType) {
+function UserCard(user: User) {
   const descriptionContent = (
     <Fragment>
       <Space>

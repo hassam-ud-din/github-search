@@ -1,9 +1,9 @@
 import { Select } from "antd"
-import { CategoryType } from "../../shared/types"
+import { Category } from "../../shared/types"
 
 type Props = {
   selectedCategory: string
-  categories: Array<CategoryType>
+  categories: Array<Category>
   handleCategoryChange: (newCategory: string) => void
 }
 
