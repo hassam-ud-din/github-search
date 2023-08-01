@@ -9,14 +9,14 @@ import {
 } from "../features/dataSlice"
 import CardList from "../components/CardList"
 import useInfiniteScroll from "../hooks/useInfiniteScroll"
-import { CategoryType } from "../shared/types"
+import { Category } from "../shared/types"
 import { Divider, Layout, Alert } from "antd"
 import LoadingCards from "../components/LoadingCards"
 import Search from "../components/Search"
 import { MIN_SEARCH_LENGTH } from "../shared/constants"
 
 type Props = {
-  categories: Array<CategoryType>
+  categories: Array<Category>
 }
 
 function SearchContainer({ categories }: Props) {

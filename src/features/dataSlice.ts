@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { UserType, RepoType } from "../shared/types"
+import { APIData } from "../shared/types"
 import { CARDS_PER_PAGE } from "../shared/constants"
 import { searchGithub } from "../services/api"
 
@@ -45,7 +45,7 @@ export const fetchScrollResults = createAsyncThunk(
 type DataState = {
   query: string
   category: string
-  data: Array<UserType | RepoType>
+  data: Array<APIData>
   loading: boolean
   error: string | null
   nextPage: number

@@ -1,11 +1,11 @@
-export type UserType = {
+export type User = {
   id: number
   login: string
   html_url: string
   avatar_url: string
 }
 
-export type RepoType = {
+export type Repo = {
   id: number
   name: string
   full_name: string
@@ -16,8 +16,10 @@ export type RepoType = {
   description: string
   watchers: number
   created_at: string
-  owner: UserType
+  owner: User
 }
+
+export type APIData = User | Repo
 
 export type APIOptions = {
   q: string
@@ -27,4 +29,4 @@ export type APIOptions = {
   page?: number
 }
 
-export type CategoryType = { value: string; label: string }
+export type Category = { value: string; label: string }
