@@ -3,19 +3,19 @@ import storage from "redux-persist/es/storage"
 import { persistReducer } from "redux-persist"
 import { combineReducers } from "@reduxjs/toolkit"
 import { persistStore } from "redux-persist"
-import thunk from "redux-thunk"
-import searchReducer from "../features/searchSlice"
+import dataReducer from "../features/dataSlice"
 import themeReducer from "../features/themeSlice"
+import thunk from "redux-thunk"
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["search", "theme"],
+  whitelist: ["data", "theme"],
 }
 
 const rootReducer = combineReducers({
   theme: themeReducer,
-  search: searchReducer,
+  data: dataReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
