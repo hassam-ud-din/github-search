@@ -16,8 +16,9 @@ const useDebounce = (callback: CallbackFunction, delay: number) => {
   }, [callback])
 
   useEffect(() => {
+    const currentDebouncedFn = debouncedFn.current
     return () => {
-      debouncedFn.current.cancel()
+      currentDebouncedFn.cancel()
     }
   }, [])
 
