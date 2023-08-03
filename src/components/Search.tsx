@@ -5,7 +5,12 @@ import CustomSwitch from "./common/CustomSwitch"
 import InputField from "./common/InputField"
 import Dropdown from "./common/Dropdown"
 import CustomLogo from "./common/CustomLogo"
+import GithubLogoBlack from "../assets/images/github-mark.svg"
+import GithubLogoWhite from "../assets/images/github-mark-white.svg"
 import { Category } from "../shared/types"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { toggleTheme } from "../features/themeSlice"
+import useStyles from "../hooks/useStyles"
 
 type Props = {
   searchTerm: string
@@ -24,34 +29,59 @@ function Search({
   handleCategoryChange,
   handleSearchChange,
 }: Props) {
+  const dispatch = useAppDispatch()
+  const darkMode = useAppSelector((state) => state.theme.darkMode)
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme())
+  }
+
+  const { styles } = useStyles()
   return (
     <Space
       direction="vertical"
-      className={`width400 ${searchTerm.length < MIN_SEARCH_LENGTH ? "center" : ""}`}
+      className={`${searchTerm.length < MIN_SEARCH_LENGTH && styles.center}`}
     >
       <Row gutter={[16, 16]} align={"middle"}>
         <Col>
-          <CustomLogo />
+          <CustomLogo
+            DarkModeLogo={GithubLogoWhite}
+            LightModeLogo={GithubLogoBlack}
+            size={48}
+          />
         </Col>
         <Col flex="auto">
-          <Title level={4} style={{ marginBottom: "0", marginBlockStart: "0" }}>
+          <Title level={4} className={styles.title}>
             Github Searcher
           </Title>
           <Text type="secondary">Search users or repositories below</Text>
         </Col>
         <Col>
-          <CustomSwitch />
+          <CustomSwitch
+            id={"darkToggleTheme"}
+            checkedChildren={"Dark"}
+            unCheckedChildren={"Light"}
+            checked={darkMode}
+            handleChange={handleToggleTheme}
+          />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col flex="auto">
-          <InputField searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
+          <InputField
+            type={"text"}
+            name={"search"}
+            placeholder={"Start typing to search..."}
+            value={searchTerm}
+            handleValueChange={handleSearchChange}
+          />
         </Col>
         <Col>
           <Dropdown
-            selectedCategory={selectedCategory}
-            categories={categories}
-            handleCategoryChange={handleCategoryChange}
+            selected={selectedCategory}
+            options={categories}
+            handleOptionChange={handleCategoryChange}
+            width={"6.25rem"}
           />
         </Col>
       </Row>

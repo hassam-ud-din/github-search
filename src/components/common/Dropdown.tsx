@@ -2,22 +2,21 @@ import { Select } from "antd"
 import { Category } from "../../shared/types"
 
 type Props = {
-  selectedCategory: string
-  categories: Array<Category>
-  handleCategoryChange: (newCategory: string) => void
+  selected: string
+  options: Array<Category>
+  handleOptionChange: (newCategory: string) => void
+  width?: string | number
 }
 
-function Dropdown({ selectedCategory, categories, handleCategoryChange }: Props) {
-  const defaultValue = categories.find(
-    (category) => category.value === selectedCategory
-  )?.label
+function Dropdown({ selected, width, options, handleOptionChange }: Props) {
+  const defaultValue = options.find((option) => option.value === selected)?.label
 
   return (
     <Select
-      defaultValue={defaultValue ? defaultValue : categories[0].label}
-      style={{ width: 100 }}
-      onChange={handleCategoryChange}
-      options={categories}
+      defaultValue={defaultValue ? defaultValue : options[0].label}
+      style={{ width: width ? width : "6.25rem" }}
+      onChange={handleOptionChange}
+      options={options}
     />
   )
 }

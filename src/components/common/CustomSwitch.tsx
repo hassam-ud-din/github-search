@@ -1,28 +1,21 @@
-import { useDispatch, useSelector } from "react-redux"
 import { Switch } from "antd"
-import { toggleTheme } from "../../features/themeSlice"
 
-type RootState = {
-  theme: {
-    darkMode: boolean
-  }
+type Props = {
+  id?: string
+  checkedChildren?: string
+  unCheckedChildren?: string
+  checked: boolean
+  handleChange: () => void
 }
 
-function CustomSwitch() {
-  const dispatch = useDispatch()
-  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
-
-  const handleToggleTheme = () => {
-    dispatch(toggleTheme())
-  }
-
+function CustomSwitch(props: Props) {
   return (
     <Switch
-      id="darkModeToggle"
-      checkedChildren="Dark"
-      unCheckedChildren="Light"
-      checked={darkMode}
-      onChange={handleToggleTheme}
+      id={props.id}
+      checkedChildren={props.checkedChildren}
+      unCheckedChildren={props.unCheckedChildren}
+      checked={props.checked}
+      onChange={props.handleChange}
     />
   )
 }

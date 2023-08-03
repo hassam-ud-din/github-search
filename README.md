@@ -27,7 +27,7 @@ The user interface for the app was built in React.js with TypeScript and Ant Des
 2. **State Management with Redux Toolkit**: Redux toolkit centralizes the app's state with less boilerplate code and makes data from various components easily accessible. Additionally, it makes it possible for asynchronous events like API queries and loading feedback to be handled effectively via thunk middleware.
 
 3. **Infinite Scroll**: The app leverages infinite scroll to load additional search results as the user scrolls down the page rather than displaying a "Load More" button. This reduces the need for further user involvement and offers a more seamless user experience.
-  
+
 4. **Design tokens**: The UI components in the app are created using the Ant Design library. Usage of design tokens allows for a consistent and adaptable design system.
 
 5. **Error Handling**: The app has error handling so that when an API request fails, error messages are sent to users. The Ant Design 'Alert' component is used to display error alerts.
@@ -36,16 +36,18 @@ The user interface for the app was built in React.js with TypeScript and Ant Des
 
 7. **Custom Hooks**: To handle particular functions in a reusable way, custom hooks such as `useDebounce` and `useInfiniteScroll` have been implemented. As a result, code duplication is decreased and code reuse is encouraged.
 
+8. **CSS-in-JS**: To reduce the styles to component level rather than having global styles. Allows for dynamic styling with ant-design and overall a better developer experience.
+
 ## Getting Started
 
 To run the app locally, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory and install dependencies with `npm install`.
-3. Obtain a Github API token from https://github.com/settings/tokens (if needed).
+3. Obtain a Github Search API token.
 4. Create a `.env` file in the root of the project and add your API token as `GITHUB_ACCESS_TOKEN`.
-5. Start the development server with `npm start`.
-6. Open your web browser and go to `http://localhost:3000` to access the app.
+5. Start the development server with `npm run dev`.
+6. Open your web browser and go to `http://localhost:5173` to access the app.
 
 ## Credits
 

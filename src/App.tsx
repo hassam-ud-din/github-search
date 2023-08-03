@@ -1,17 +1,11 @@
-import SearchContainer from "./containers/SearchContainer"
-import { Category } from "./shared/types"
-import { Layout } from "antd"
+import { BrowserRouter } from "react-router-dom"
+import Router from "./router/Router"
 
 function App() {
-  const categories: Array<Category> = [
-    { value: "users", label: "User" },
-    { value: "repositories", label: "Repos" },
-  ]
-
   return (
-    <Layout className="container">
-      <SearchContainer categories={categories} />
-    </Layout>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
   )
 }
 

@@ -1,7 +1,5 @@
-import { useSelector } from "react-redux"
 import { Avatar } from "antd"
-import GithubLogoBlack from "../../assets/images/github-mark.svg"
-import GithubLogoWhite from "../../assets/images/github-mark-white.svg"
+import { useAppSelector } from "../../app/hooks"
 
 type RootState = {
   theme: {
@@ -9,14 +7,20 @@ type RootState = {
   }
 }
 
-function GithubLogo() {
-  const darkMode = useSelector((state: RootState) => state.theme.darkMode)
-
-  if (darkMode) {
-    return <Avatar size={48} src={GithubLogoWhite} />
-  }
-
-  return <Avatar size={48} src={GithubLogoBlack} />
+type Props = {
+  DarkModeLogo: string
+  LightModeLogo: string
+  size: number
 }
 
-export default GithubLogo
+function CustomLogo({ DarkModeLogo, LightModeLogo, size }: Props) {
+  const darkMode = useAppSelector((state: RootState) => state.theme.darkMode)
+
+  if (darkMode) {
+    return <Avatar size={size} src={DarkModeLogo} />
+  }
+
+  return <Avatar size={size} src={LightModeLogo} />
+}
+
+export default CustomLogo
