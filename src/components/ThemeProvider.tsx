@@ -1,8 +1,8 @@
-import React, { useEffect } from "react"
-import * as lightTheme from "../ant-tokens/light.json"
-import * as darkTheme from "../ant-tokens/dark.json"
-import { ConfigProvider, theme } from "antd"
-import { useAppSelector } from "../app/hooks"
+import React from 'react'
+import * as lightTheme from '../ant-tokens/light.json'
+import * as darkTheme from '../ant-tokens/dark.json'
+import { ConfigProvider, theme } from 'antd'
+import { useAppSelector } from '../app/hooks'
 
 type RootState = {
   theme: {
@@ -17,10 +17,6 @@ type Props = {
 function ThemeProvider({ children }: Props) {
   const darkMode = useAppSelector((state: RootState) => state.theme.darkMode)
   const token = darkMode ? darkTheme : lightTheme
-
-  useEffect(() => {
-    document.documentElement.style.backgroundColor = token.colorBgDocument
-  }, [darkMode, token.colorBgDocument])
 
   return (
     <ConfigProvider
