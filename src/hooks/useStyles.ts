@@ -1,7 +1,8 @@
-import { createStyles } from "antd-style"
+import { createStyles } from 'antd-style'
 
 const useStyles = createStyles(({ css }) => ({
   container: css`
+    min-height: 100vh;
     padding-left: 6.25rem;
     padding-right: 6.25rem;
 

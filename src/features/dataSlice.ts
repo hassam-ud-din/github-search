@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { APIData } from "../shared/types"
-import { CARDS_PER_PAGE } from "../shared/constants"
-import { searchGithub } from "../services/api"
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { APIData } from '../shared/types'
+import { CARDS_PER_PAGE } from '../shared/constants'
+import { searchGithub } from '../services/api'
 
 type FetchResultsPayload = {
   category: string
@@ -10,35 +10,31 @@ type FetchResultsPayload = {
 }
 
 export const fetchSearchResults = createAsyncThunk(
-  "search/fetchSearchResults",
+  'search/fetchSearchResults',
   async ({ category, query }: FetchResultsPayload, { rejectWithValue }) => {
-    try {
-      const options = {
-        q: query,
-        per_page: CARDS_PER_PAGE,
-      }
-      const data = await searchGithub(category, options)
-      return data.items
-    } catch (error) {
-      return rejectWithValue("An error occurred when searching for results. Please try again.")
+    const options = {
+      q: query,
+      per_page: CARDS_PER_PAGE,
     }
+    const data = await searchGithub(category, options)
+    return data
+      ? data
+      : rejectWithValue('An error occurred when searching for results. Please try again.')
   }
 )
 
 export const fetchScrollResults = createAsyncThunk(
-  "search/fetchScrollResults",
+  'search/fetchScrollResults',
   async ({ category, query, page }: FetchResultsPayload, { rejectWithValue }) => {
-    try {
-      const options = {
-        q: query,
-        per_page: CARDS_PER_PAGE,
-        page,
-      }
-      const data = await searchGithub(category, options)
-      return data.items
-    } catch (error) {
-      return rejectWithValue("An error occurred when searching for results. Please try again.")
+    const options = {
+      q: query,
+      per_page: CARDS_PER_PAGE,
+      page,
     }
+    const data = await searchGithub(category, options)
+    return data
+      ? data
+      : rejectWithValue('An error occurred when searching for results. Please try again.')
   }
 )
 
@@ -55,8 +51,8 @@ type DataState = {
 }
 
 const initialState: DataState = {
-  query: "",
-  category: "users",
+  query: '',
+  category: 'users',
   data: [],
   loading: false,
   error: null,
@@ -67,7 +63,7 @@ const initialState: DataState = {
 }
 
 const dataSlice = createSlice({
-  name: "search",
+  name: 'search',
   initialState,
   reducers: {
     setQuery: (state, action: PayloadAction<string>) => {
