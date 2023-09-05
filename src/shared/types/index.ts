@@ -21,10 +21,13 @@ export type Repo = {
 
 export type APIData = User | Repo
 
+export type Sort = 'followers' | 'repositories' | 'joined'
+export type Order = 'desc' | 'asc'
+
 export type APIOptions = {
   q: string
-  sort?: "followers" | "repositories" | "joined"
-  order?: "desc" | "asc"
+  sort?: Sort
+  order?: Order
   per_page?: number
   page?: number
 }
