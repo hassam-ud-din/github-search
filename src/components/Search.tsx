@@ -1,16 +1,14 @@
-import { Row, Space, Col, Typography } from "antd"
-import React from "react"
-import { MIN_SEARCH_LENGTH } from "../shared/constants"
-import CustomSwitch from "./common/CustomSwitch"
-import InputField from "./common/InputField"
-import Dropdown from "./common/Dropdown"
-import CustomLogo from "./common/CustomLogo"
-import GithubLogoBlack from "../assets/images/github-mark.svg"
-import GithubLogoWhite from "../assets/images/github-mark-white.svg"
-import { Category } from "../shared/types"
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { toggleTheme } from "../features/themeSlice"
-import useStyles from "../hooks/useStyles"
+import { Row, Space, Col, Typography, Switch, Input } from 'antd'
+import React from 'react'
+import { MIN_SEARCH_LENGTH } from '../shared/constants'
+import Dropdown from './common/Dropdown'
+import CustomLogo from './common/CustomLogo'
+import GithubLogoBlack from '../assets/images/github-mark.svg'
+import GithubLogoWhite from '../assets/images/github-mark-white.svg'
+import { Category } from '../shared/types'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { toggleTheme } from '../features/themeSlice'
+import useStyles from '../hooks/useStyles'
 
 type Props = {
   searchTerm: string
@@ -42,7 +40,7 @@ function Search({
       direction="vertical"
       className={`${searchTerm.length < MIN_SEARCH_LENGTH && styles.center}`}
     >
-      <Row gutter={[16, 16]} align={"middle"}>
+      <Row gutter={[16, 16]} align={'middle'}>
         <Col>
           <CustomLogo
             DarkModeLogo={GithubLogoWhite}
@@ -57,23 +55,24 @@ function Search({
           <Text type="secondary">Search users or repositories below</Text>
         </Col>
         <Col>
-          <CustomSwitch
-            id={"darkToggleTheme"}
-            checkedChildren={"Dark"}
-            unCheckedChildren={"Light"}
+          <Switch
+            id="darkToggleTheme"
+            checkedChildren="Dark"
+            unCheckedChildren="Light"
             checked={darkMode}
-            handleChange={handleToggleTheme}
+            onChange={handleToggleTheme}
           />
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col flex="auto">
-          <InputField
-            type={"text"}
-            name={"search"}
-            placeholder={"Start typing to search..."}
+          <Input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Start typing to search..."
             value={searchTerm}
-            handleValueChange={handleSearchChange}
+            onChange={handleSearchChange}
           />
         </Col>
         <Col>
@@ -81,7 +80,7 @@ function Search({
             selected={selectedCategory}
             options={categories}
             handleOptionChange={handleCategoryChange}
-            width={"6.25rem"}
+            width={'6.25rem'}
           />
         </Col>
       </Row>
