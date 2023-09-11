@@ -30,12 +30,17 @@ function SearchContainer() {
 
   const persistedQuery = useAppSelector((state) => state.data.query)
   const persistedCategory = useAppSelector((state) => state.data.category)
-  const [urlQuery] = useState<string | null>(searchParams.get('q'))
-  const [urlCategory] = useState<string | null>(searchParams.get('category'))
 
-  const [searchTerm, setSearchTerm] = useState<string>(urlQuery ? urlQuery : persistedQuery)
+  // get the query and category from url
+  const url = { query: searchParams.get('q'), category: searchParams.get('category') }
+
+  // use the url query if it's valid
+  const [searchTerm, setSearchTerm] = useState<string>(url.query ? url.query : persistedQuery)
+
+  // use the url category if it's valid
+  const isCategoryValid = categories.some((item) => item.value === url.category)
   const [category, setCategory] = useState<string>(
-    urlCategory ? urlCategory : persistedCategory
+    isCategoryValid ? url.category! : persistedCategory
   )
 
   const { data, loading, error, loadingMore, nextPage, errorMore, hasMoreData } =
@@ -75,14 +80,19 @@ function SearchContainer() {
       await dispatch(fetchScrollResults({ category, query: searchTerm, page: nextPage }))
   }
 
-  const searchParamsValid =
-    urlQuery &&
-    urlCategory &&
-    categories.some((category) => category.value === urlCategory) &&
-    (persistedQuery !== urlQuery || persistedCategory !== urlCategory)
-
+  // sync the router with the search on page load
   useEffect(() => {
-    if (searchParamsValid) debouncedFetchSearchResults(category)
+    setSearchParams((params) => {
+      params.set('q', searchTerm)
+      params.set('category', category)
+      return params
+    })
+  }, [])
+
+  // fetch results when search parameters change
+  useEffect(() => {
+    if (persistedQuery !== searchTerm || persistedCategory !== category)
+      debouncedFetchSearchResults(category)
   }, [searchParams])
 
   const observerRef = useInfiniteScroll(fetchAndUpdateScrollResults)
